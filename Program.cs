@@ -61,12 +61,12 @@ namespace DriveRestorer
                         for (int i = 0; i < folderGroups.Count; i++)
                         {
                             var folderGroup = folderGroups[i];
-                            Console.WriteLine($"{DateTime.Now.ToLongTimeString()}: Folder '{folderGroup.First().OriginalFolderName}' ({folderGroup.Key}) needs to contain {folderGroup.Count()} orphaned files. {((i / (double)folderGroups.Count) * 100).ToString("0.0")}%");
+                            Console.WriteLine($"{DateTime.Now.ToLongTimeString()}: Folder '{folderGroup.First().OriginalFolderName}' ({folderGroup.Key}) used to contain {folderGroup.Count()} orphaned files. ({i + 1}/{folderGroups.Count}).");
                             foreach (MoveInfo moveInfo in folderGroup)
                             {
                                 filesMovedBack++;
                                 string percentageCompleted = (filesMovedBack / (double)totalMovedFiles * 100).ToString("0.0");
-                                Console.Write($"{DateTime.Now.ToLongTimeString()}: ... Moving fileId {moveInfo.FileId} to folderId {moveInfo.OriginalFolderId}");
+                                Console.Write($"{DateTime.Now.ToLongTimeString()}: ... Moving {moveInfo.FileName} ({moveInfo.FileId}) to folderId {moveInfo.OriginalFolderId}");
                                 DriveFile file = GetFile(driveService, moveInfo.FileId);
                                 if (file.Parents.Count == 1 && file.Parents.Single() == options.DriveId)
                                 {
